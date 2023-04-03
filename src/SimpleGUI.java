@@ -1,5 +1,4 @@
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -19,8 +18,6 @@ import javax.swing.event.ChangeListener;
 
 public class SimpleGUI extends JFrame implements ActionListener, ItemListener, ChangeListener{
 
-    private JCheckBox checkBox1;
-    private JCheckBox checkBox2;
     private JLabel welcomeLabel;
     private JTextField textField;
     private JTextArea textArea;
@@ -83,11 +80,6 @@ public class SimpleGUI extends JFrame implements ActionListener, ItemListener, C
         JButton resetButton = new JButton("Reset");
         JButton openButton = new JButton("Open");
 
-        // create checkboxes
-        checkBox1 = new JCheckBox("Yes");
-        checkBox1.setBounds(100, 100, 50, 50);
-        checkBox2 = new JCheckBox("No", true);
-        checkBox2.setBounds(100, 150, 50, 50);
 
         // create a panel for organizing the components at the bottom
         JPanel panel = new JPanel(); // a "panel" is not visible
@@ -98,8 +90,6 @@ public class SimpleGUI extends JFrame implements ActionListener, ItemListener, C
         panel.add(sendButton);
         panel.add(resetButton);
         panel.add(openButton);
-        panel.add(checkBox1);
-        panel.add(checkBox2);
 
         // creating a third panel to place slider and bottom panels vertically
         // (allows two rows of UI elements to be displayed)
@@ -125,9 +115,6 @@ public class SimpleGUI extends JFrame implements ActionListener, ItemListener, C
         menuItem3.addActionListener(this);
         menuItem4.addActionListener(this);
 
-        //setting up checkboxes to use ItemListener interface and itemStateChanged method
-        checkBox1.addItemListener(this);
-        checkBox2.addItemListener(this);
 
         slider.addChangeListener(this);
 
@@ -147,7 +134,7 @@ public class SimpleGUI extends JFrame implements ActionListener, ItemListener, C
             if (text.equals("Send")) {
                 welcomeLabel.setText("Send pressed!");
                 String str = textField.getText();
-                textArea.append(str);
+                    textArea.append(str);
             } else if (text.equals("Reset")) {
                 welcomeLabel.setText("Reset pressed!");
                 textArea.setText("");
@@ -171,23 +158,6 @@ public class SimpleGUI extends JFrame implements ActionListener, ItemListener, C
 
     // ItemListener interface method, called when EITHER check box is toggled!
     public void itemStateChanged(ItemEvent e) {
-
-        // cast e to a JCheckBox object since we want to call the getText method on it;
-        // casting is needed since getSource() returns Object type, NOT a JCheckBox
-        Object source = e.getSource();
-        JCheckBox cb = (JCheckBox) source;
-        String cbText = cb.getText();
-
-        int checkBoxOnOrOff = e.getStateChange(); // 1 for selected, 2 for deselected
-        if (checkBoxOnOrOff == 1) {
-            welcomeLabel.setText(cbText + " box SELECTED!");
-        } else if (checkBoxOnOrOff == 2) {
-            welcomeLabel.setText(cbText + " box DESELECTED!");
-        }
-
-        // we don't "print" with GUI based apps, but printing
-        // can still be helpful for testing and debugging!
-        System.out.println("Current state: yes = " + checkBox1.isSelected() + ", no = " + checkBox2.isSelected());
     }
 
     @Override
